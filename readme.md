@@ -5,3 +5,12 @@
 
 %>%: dplyr 연산자  
 
+```
+table(pred = test$pred1, real = test$raintomorrow)
+pro <- prop.table(table(pred = test$pred1, real = test$raintomorrow))
+
+## 정확도 정답: 0.9181818
+accuracy <- pro[1,1] + pro[2,2]
+accuracy
+
+```
