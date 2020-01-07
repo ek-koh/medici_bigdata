@@ -5,7 +5,7 @@
 
 %>%: dplyr 연산자  
 
-```
+```r
 table(pred = test$pred1, real = test$raintomorrow)
 pro <- prop.table(table(pred = test$pred1, real = test$raintomorrow))
 
