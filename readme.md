@@ -25,3 +25,8 @@ accuracy
 | `relative` | 요소 자신을 기준으로 배치 |  |
 | `absolute` | 위치 상 부모(조상)요소를 기준으로 배치 |  |
 | `fixed` | 브라우저 창을 기준으로 배치 |  |
+
+
+
+
+![ㅓㅓㅓ](https://user-images.githubusercontent.com/58713684/71889247-1327ac80-3185-11ea-84a3-cd35e020302b.png)
