@@ -1,0 +1,74 @@
+# Java : Day 3
+
+- 교재: [이것이 자바다](http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.prdNo=232651697&gclid=CjwKCAiAu9vwBRAEEiwAzvjq-5c0OG19ExoqlBGND0CjxeH3adV_MU0-flqhkAncVknu1FSAH9g6ORoCi6cQAvD_BwE)
+- 자료: [Java Programming Language.pdf[jdk1.7]](https://github.com/ek-koh/medici_bigdata/blob/master/Java/%5BJDK7%5D%20Java%20Programming%20Language.pdf)
+
+
+## 단축키
+- ctrl + F11: 실행
+- ctrl + N: 새 파일
+    + class, Java Project 이런 것 검색해서 Next
+    + 프로젝트 만든 것 하위목록 중 'src'에서 ctrl + N 해서 package 검색해서 만들 수도 있음
+        + 만들어진 package에 두고 class 만들면 자동으로 package 입력
+- ctrl + M: script 전체화면
+- ctrl + space: 자동완성
+    + syso까지만 입력하고 ctrl+space 하면 System.out.println();
+- ctrl + /: 주석처리
+- F3: println에 커서 놓고 F3 누르면 상세 설명 볼 수 있음, Main에서 메서드에 커서 놓고 F3 누르면 관련된 클래스로 이동
+- ctrl + 1: 오류 자세히 보기
+
+
+## 32. API(Appication Programming Interface)
+- 약속, 규칙
+- 프로그래밍을 구현하기 위해 정리해 놓은 규칙
+- url api : restful
+    + http://www.medici.co.kr/bigdata/name/{id=1}
+- method api
+```java
+class People {
+    private String name;
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        People p = new People();
+        p.setName("이름");
+    }
+}
+```
+
+
+## 33. 생성자(constructor)
+- 생성자는 클래스 이름과 동일하고 리턴타입이 없다.
+- 객체를 생성할 때 가장 먼저 호출되는 것
+- 값을 초기화할 때 사용한다.
+- argument의 개수에 따라서 여러 개 사용할 수 있다.
+    + '생성자 오버로딩'이라고 한다.
+- default 생성자는 생정자를 만들지 않아도 자동으로 생성된다.
+- argument가 있는 생성자를 만들게 되면
+    + 반드시 default 생성자를 만들어야 한다.
+    + 그렇지 않으면 오류 발생한다.
+
+## 34. this/super 키워드
+- this: 자기 자신의 클래스에서 자기자신의 레퍼런스를 가리킬 때 사용하는 키워드
+```java
+People p = new People();
+                this();
+```
+- this는 생성자로도 사용이 가능하고, 자기자신의 멤버 필드나 멤버 메소드를 가져올 때도 사용한다.
+```java
+class People {
+    private String name;
+
+    public setName(String name) {
+        name = name;
+    }
+}
+```
+
+35. block 변수와 member field의 우선순위
+- block 변수와 member field의 이름이 같으면 block 변수가 우선순위가 노다.
+- block 변수를 사용한다.
