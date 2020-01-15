@@ -1,0 +1,43 @@
+## Java : Day 4
+
+- 교재: [이것이 자바다](http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.prdNo=232651697&gclid=CjwKCAiAu9vwBRAEEiwAzvjq-5c0OG19ExoqlBGND0CjxeH3adV_MU0-flqhkAncVknu1FSAH9g6ORoCi6cQAvD_BwE)
+- 자료: [Java Programming Language.pdf[jdk1.7]](https://github.com/ek-koh/medici_bigdata/blob/master/Java/%5BJDK7%5D%20Java%20Programming%20Language.pdf)
+
+
+## 단축키
+- ctrl + F11: 실행
+- ctrl + N: 새 파일
+    + class, Java Project 이런 것 검색해서 Next
+    + 프로젝트 만든 것 하위목록 중 'src'에서 ctrl + N 해서 package 검색해서 만들 수도 있음
+        + 만들어진 package에 두고 class 만들면 자동으로 package 입력
+- ctrl + M: script 전체화면
+- ctrl + space: 자동완성
+    + syso까지만 입력하고 ctrl+space 하면 System.out.println();
+- ctrl + /: 주석처리
+- F3: println에 커서 놓고 F3 누르면 상세 설명 볼 수 있음, Main에서 메서드에 커서 놓고 F3 누르면 관련된 클래스로 이동
+- ctrl + 1: 오류 자세히 보기
+- ctrl + s: 저장(컴파일)
+    + IDE에서 중간중간 변경된 사항을 저장하지 않으면 컴파일 되지 않은 상태이므로 오류가 생길 수 있음
+- ctrl + d: 줄 없애기
+- alt + 위아래방향키: 해당 라인 위치이동
+
+## 관련 파일(.java)
+- Star.java
+
+
+## 48. jar(java archive)
+- java로 만들어진 프로그램을 압축해서 라이브러리 형태로 사용할 수 있다.
+- 다른 사람들에게 배포해서 사용하게 할 수 있다.
+- jar파일을 만들어서 export(외부로 배포)하거나
+    - 프로젝트 우클릭 -> export
+![image](https://user-images.githubusercontent.com/58713684/72403729-72457c80-3796-11ea-84a9-ae4caa70d592.png)
+
+![image](https://user-images.githubusercontent.com/58713684/72404192-cac94980-3797-11ea-8322-a1d13edf0292.png)
+
+- jar파일을 만들어서 import(library로 사용)할 수 있다.
+    - 프로젝트 이름에서 우클릭 -> properties -> Java Build Path -> libraries -> Add External JARS
+![image](https://user-images.githubusercontent.com/58713684/72404221-e16fa080-3797-11ea-84d1-421da861de84.png)
+![image](https://user-images.githubusercontent.com/58713684/72404256-ff3d0580-3797-11ea-8106-a7e8066a9716.png)
+
+
+
