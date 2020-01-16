@@ -1,0 +1,70 @@
+# Java : Day 5
+
+- 교재: [이것이 자바다](http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.prdNo=232651697&gclid=CjwKCAiAu9vwBRAEEiwAzvjq-5c0OG19ExoqlBGND0CjxeH3adV_MU0-flqhkAncVknu1FSAH9g6ORoCi6cQAvD_BwE)
+- 자료: [Java Programming Language.pdf[jdk1.7]](https://github.com/ek-koh/medici_bigdata/blob/master/Java/%5BJDK7%5D%20Java%20Programming%20Language.pdf)
+
+
+## 단축키
+- `ctrl + F11`: 실행
+- `ctrl + N`: 새 파일
+    + class, Java Project 이런 것 검색해서 Next
+    + 프로젝트 만든 것 하위목록 중 'src'에서 `ctrl + N` 해서 package 검색해서 만들 수도 있음
+        + 만들어진 package에 두고 class 만들면 자동으로 package 입력
+- `ctrl + M`: 전체화면 & 되돌리기
+- `ctrl + space`: 자동완성
+    + syso까지만 입력하고 `ctrl+space` 하면 System.out.println();
+- `ctrl + /`: 주석처리
+- `F3`: println에 커서 놓고 F3 누르면 상세 설명 볼 수 있음, Main에서 메서드에 커서 놓고 F3 누르면 관련된 클래스로 이동
+- `ctrl + 1`: 오류 자세히 보기
+- `ctrl + s`: 저장(컴파일)
+    + IDE에서 중간중간 변경된 사항을 저장하지 않으면 컴파일 되지 않은 상태이므로 오류가 생길 수 있음
+- `ctrl + d`: 줄 없애기
+- `alt + 위아래방향키`: 해당 라인 위치이동
+
+
+## 59. 3, 6, 9 게임 만들기
+- 1~100까지를 출력하면서 3이나 6이나 9가 들어가 있으면 3, 6, 9가 들어간 개수만큼 *을 출력하는 프로그램 작성
+- 화면에 출력할 때 10개씩 볼 수 있도록 하기
+- 숫자와 숫자 사이에는 \t을 사용해서 8칸씩 띄우기
+
+```
+[결과화면]
+1   2   *   4   5   *   7   8   *   10
+11  12  *   14  15  *   17  18  *   20
+21  22  *   24  25  *   27  28  *   30
+*   *   **  *   *   **  *   *   **  40
+...
+*   *   **  *   *   **  *   *   **  100
+```
+```java
+// 1~100을 출력한다.
+// 10으로 나눠서 떨어지면 System.out.println()해서 한줄을 내려준다.
+// 숫자 사이의 간격을 띄워주기 위해서 \t을 추가해준다.
+// String s = "12"; // 문자열
+// char c = s.charAt(0); //1
+// char d = s.charAt(1); //2
+
+class Play369 {
+    public void play() {
+
+    }
+}
+
+class Game {
+    public static void main(String[]) {
+        Play369 play369 = new Play369();
+        play369.play(1,100);
+    }
+}
+```
+
+## 60. 다형성 발생원리 3가지
+- 부모의 이름으로 자식을 생성할 수 있다.
+- 부모의 이름으로 자식을 받을 수 있다.
+- 부모의 메소드로 자식의 메소드를 호출할 수 있다.
+    - (단, 상속과 오버라이딩이 되어 있을 경우)
+
+> (참고)
+- 다형성
+    - 다양한 형태로 나타내는 성질
+    - 부모의 메소드가 자식의 형태에 따라 다양하게 호출되는 것
