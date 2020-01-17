@@ -1,0 +1,39 @@
+# Java : Day 5
+
+- 교재: [이것이 자바다](http://book.interpark.com/product/BookDisplay.do?_method=detail&sc.prdNo=232651697&gclid=CjwKCAiAu9vwBRAEEiwAzvjq-5c0OG19ExoqlBGND0CjxeH3adV_MU0-flqhkAncVknu1FSAH9g6ORoCi6cQAvD_BwE)
+- 자료: [Java Programming Language.pdf[jdk1.7]](https://github.com/ek-koh/medici_bigdata/blob/master/Java/%5BJDK7%5D%20Java%20Programming%20Language.pdf)
+
+
+## 단축키
+- `ctrl + F11`: 실행
+- `ctrl + N`: 새 파일
+    + class, Java Project 이런 것 검색해서 Next
+    + 프로젝트 만든 것 하위목록 중 'src'에서 `ctrl + N` 해서 package 검색해서 만들 수도 있음
+        + 만들어진 package에 두고 class 만들면 자동으로 package 입력
+- `ctrl + M`: 전체화면 & 되돌리기
+- `ctrl + space`: 자동완성
+    + syso까지만 입력하고 `ctrl+space` 하면 System.out.println();
+- `ctrl + /`: 주석처리
+- `F2`: 이름 바꾸기
+- `F3`: 관련 설명/클래스 보기
+    + println에 커서 놓고 F3 누르면 상세 설명 볼 수 있음, Main에서 메서드에 커서 놓고 F3 누르면 관련된 클래스로 이동
+- `ctrl + 1`: 오류 자세히 보기
+- `ctrl + s`: 저장(컴파일)
+    + IDE에서 중간중간 변경된 사항을 저장하지 않으면 컴파일 되지 않은 상태이므로 오류가 생길 수 있음
+- `ctrl + d`: 줄 없애기
+- `alt + 위아래방향키`: 해당 라인 위치이동
+
+
+## 63. JCF(Java Collection Framework)
+- 자료구조
+- 데이터를 구조적으로 정리하는 방법
+||<<Collection>>||
+|:---:|:---:|:---:|
+|<<Set>>계열|<<List>>계열|<<Map>>계열|
+|순서 x|순서 o|key, value가 한 쌍으로 존재|
+|중복 x|중복 o|key 중복되면 안됨. key로 가져오면, value가 리턴됨|
+||||
+|HashSet|ArrayList|HashMap|
+|XxxSet|LinkedList|XxxMap|
+|...|Vector||
+||...||
