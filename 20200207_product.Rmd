@@ -1,0 +1,194 @@
+---
+title: "20200207_product"
+author: "ekoh"
+date: '2020 2 7 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## 패키지 및 데이터 불러오기
+```{r}
+library1 <- c("plyr", "ggplot2", "stringr", "zoo", "corrplot", "RColorBrewer")
+unlist(lapply(library1, require, character.only=TRUE))
+install.packages("corrplot")
+install.packages("zoo")
+
+product <- read.csv("product.csv", header = T, fileEncoding = "UTF-8")
+weather <- read.csv("weather.csv", header = T, fileEncoding = "EUC-KR")
+code <- read.csv("code.csv", header = T)
+
+head(product)
+head(weather)
+head(code)
+```
+
+## 데이터 가공
+```{r}
+colnames(product) <- c('date', 'category', 'item', 'region', 'mart', 'price')
+
+category <- subset(code, code$"구분코드설명" =="품목코드")
+category
+
+colnames(category) <- c('code', 'exp', 'item', 'name')
+
+head(product)
+category
+
+total.pig <- product[which(product$item == 514),]
+head(total.pig, 10)
+
+region <- subset(code, code$"구분코드설명"=='지역코드')
+region
+
+colnames(region) <- c('code', 'exp', 'region', 'name')
+region
+head(total.pig)
+
+day.pig <- merge(total.pig, region, by = 'region', all = T)
+head(day.pig, 10)
+```
+
+### day.pig 데이터를 일별로 정렬한 후, 지역별로 돼지고기의 평균가격을 구하여 생성한 데이터프레임을 지역별 이름으로 나누어 total.pig.mean이라는 리스트 형태의 데이터 생성
+
+#### ddply() 이해를 위한 예제
+```{r}
+x <- data.frame(
+  Date=as.Date(c('2013-10-01', '2013-10-02', '2013-10-02', '2013-10-02', '2013-10-01', '2013-10-02', '2013-10-02')),
+  Category=factor(c('First', 'First', 'First', 'Second', 'Third', 'Third', 'Second')),
+  Frequency=c(10,15,5,2,14,20,3))
+
+head(x)
+
+ddply(x, .(Date, Category), summarize, Sum_F=sum(Frequency))
+
+# dlply() 이해를 위한 예제
+x <- data.frame(
+  Date=as.Date(c('2013-10-01', '2013-10-02', '2013-10-02', '2013-10-02', '2013-10-01', '2013-10-02', '2013-10-02')),
+  Category=factor(c('First', 'First', 'First', 'Second', 'Third', 'Third', 'Second')),
+  Frequency=c(10,15,5,2,14,20,3))
+
+dlply(x, .(Date), summarize, Sum_F=sum(Frequency))
+```
+
+#### 적용
+```{r}
+head(day.pig)
+
+p1 <- ddply(day.pig, .(date), summarise, name=name, region=region, price=price)
+p2 <- ddply(p1, .(date, name), summarise, mean.price = mean(price))
+p2
+total.pig.mean <- dlply(p2, .(name))
+# total.pig.mean <- dlply(ddply(ddply(day.pig, .(date), summarise, name=name, region=region, price=price), .(date, name), summarise, mean.price=mean(price)), .(name))
+```
+
+### 각 지역별 데이터의 크기 확인하기
+```{r}
+for (i in 1:length(total.pig.mean)) {
+  cat(names(total.pig.mean)[i],"의 데이터의 길이는", 
+      nrow(total.pig.mean[[i]]),"이다\n")
+}
+
+head(day.pig)
+day.pig <- day.pig[!day.pig$name %in% c("의정부", "용인", "창원", "안동", "포항", "순천", "춘천"),]
+```
+
+### day.pig 데이터를 지역(region), 일자(date)별로 돼지고기 평균가격 구하여 pig.region.daily.mean 데이터를 생성
+```{r}
+pig.region.daily.mean <- ddply(day.pig, .(name, region, date), summarise, mean.price = mean(price))
+head(pig.region.daily.mean, n=10)
+
+pig.region.monthly.mean <- ddply(pig.region.daily.mean,
+    .(name, region, month=str_sub(pig.region.daily.mean$date,1,7)),
+    summarise, mean.price=mean(mean.price))
+head(pig.region.monthly.mean, 10)
+
+pig.region.yearly.mean <- ddply(pig.region.daily.mean,
+  .(name, region, year=str_sub(pig.region.daily.mean$date,1,4)),
+  summarise, mean.price=mean(mean.price))
+head(pig.region.yearly.mean, 10)
+```
+
+## 상관분석 및 데이터 시각화
+### 월별 돼지고기 가격 시각화
+#### geom_line
+```{r}
+pig.region.monthly.mean$month <- as.Date(as.yearmon(pig.region.monthly.mean$month, "%Y-%m"))
+head(pig.region.monthly.mean)
+
+ggplot(pig.region.monthly.mean, aes(x=month, y=mean.price, colour=name, group=name)) +
+  geom_line() + theme_bw() + geom_point(size=6, shape=20,alpha=0.5) +
+  ylab("돼지고기 가격") + xlab("")
+```
+
+### 지역별 연간 돼지고기 평균가격 시각화
+#### geom_line
+```{r}
+ggplot(pig.region.yearly.mean, aes(x=year, y=mean.price, colour=name, group=name)) +
+  geom_line() + geom_point(size=6,shape=20, alpha=0.5) + theme_bw() +
+  ylab("돼지고기 가격") + xlab("")
+```
+
+#### geom_bar
+```{r}
+ggplot(pig.region.yearly.mean, aes(x=name, y=mean.price, fill=factor(year))) +
+  theme_bw() +
+  geom_bar(stat="identity", position="dodge", colour="black") +
+  ylab("돼지고기 가격") + xlab("")
+```
+
+#### geom_boxplot
+```{r}
+ggplot(pig.region.monthly.mean, aes(x=name, y=mean.price, fill=name)) +
+  theme_bw() +
+  geom_boxplot() + 
+  ylab("돼지고기 가격") +
+  xlab("")
+```
+
+```{r}
+year.pig <- data.frame(name = pig.region.daily.mean$name,
+    region = pig.region.daily.mean$region,
+    date=pig.region.daily.mean$date,
+    year=str_sub(pig.region.daily.mean$date,1,4),
+    mean.price=pig.region.daily.mean$mean.price)
+head(year.pig)
+```
+```{r}
+ggplot(year.pig, aes(x=name, y=mean.price, fill=name)) +
+  geom_boxplot() +
+  theme_bw() +
+  facet_wrap(~year, scales = 'fixed') +
+  xlab('') + ylab("돼지고기 가격") +
+  theme(axis.text.x = element_text(size=7))
+```
+
+### 상관관계가 높은 도시들을 묶어 가격변화 살펴보기
+```{r}
+temp <- dlply(pig.region.daily.mean, .(name), summarise, mean.price)
+pig.region <- data.frame("서울"=unlist(temp$"서울"),
+                         "부산"=unlist(temp$"부산"), "대구"=unlist(temp$"대구"), "인천"=unlist(temp$"인천"), "광주"=unlist(temp$"광주"), "대전"=unlist(temp$"대전"), "울산"=unlist(temp$"울산"), "수원"=unlist(temp$"수원"), "청주"=unlist(temp$"청주"), "전주"=unlist(temp$"전주"), "제주"=unlist(temp$"제주"))
+head(pig.region)
+
+cor_pig <- cor(pig.region)
+
+corrplot(cor_pig, method="color", type="upper", order="hclust", addCoef.col = "white", tl.srt = 0, tl.col = "black", tl.cex=1, col=brewer.pal(n=10, name="PuOr"))
+```
+
+#### 월별 데이터 가공
+```{r}
+pig.region.monthly.mean$month <- as.Date(as.yearmon(pig.region.monthly.mean$month, "%Y-%m"))
+head(pig.region.monthly.mean)
+```
+
+#### 광주, 대구, 서울 지역의 2011~2013년 월별 돼지고기 가격 시계열 그래프
+```{r}
+ggplot(pig.region.monthly.mean[pig.region.monthly.mean$name %in% c("광주", "대구", "서울 "),],
+       aes(x=month, y=mean.price, colour=name, group=name)) +
+  geom_line() + theme_classic() + 
+  geom_point(size = 6, shape=20, alpha=0.5) +
+  ylab("돼지고기 가격") + xlab("")
+```
