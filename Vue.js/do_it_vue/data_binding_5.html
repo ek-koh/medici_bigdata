@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>v-on 이벤트 다루기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="clickBtn(10)">클릭</button>
+        <!-- 값을 넣을 수 있음 -->
+        <!-- But 추천하지 않는 방법 -->
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            methods: {
+                clickBtn(value) {
+                    alert("클릭"+value)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

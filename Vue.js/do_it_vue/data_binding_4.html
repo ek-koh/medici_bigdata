@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>디렉티브 다루기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a v-if="flag">두잇 Vue.js</a>
+        <ul>
+            <li v-for="system in systems" v-bind:key="system">
+                {{ system }}
+            </li>
+        </ul>
+        <p v-show="flag">두잇 Vue.js</p>
+        <h5 v-bind:id="uid">뷰 입문서</h5>
+        <button v-on:click="popupAlert">경고창 버튼</button>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                flag: true,
+                // 이런 식으로 중복되면 향후 문제 발생할 수 있음
+                // systems: ["Android", "Android", "iOS", "Windows"],
+                systems: ["Android", "iOS", "Windows"],
+                uid: 10
+            },
+            methods: {
+                popupAlert() {
+                    alert("경고창 표시")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

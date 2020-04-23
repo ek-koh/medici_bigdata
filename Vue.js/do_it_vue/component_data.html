@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>상위 하위 컴포넌트간 데이터 전달</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+        <child-component v-bind:aa="message" v-bind:bb="bbmessage"></child-component>
+    </div>
+    <script>
+        Vue.component('child-component', {
+            props: ["aa", "bb"],
+            template: "<div><p>{{ aa }}</p><p>{{ bb }}</p></div>"
+        })
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "Parent Component",
+                bbmessage: "bbb"
+            }
+        })
+    </script>
+</body>
+</html>
