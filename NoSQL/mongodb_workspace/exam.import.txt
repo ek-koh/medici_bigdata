@@ -1,0 +1,4 @@
+// import data 
+mongoimport --db exam --collection orders --drop --file exam.orders.json
+mongoimport --db exam --collection items --drop --file exam.items.json
+
