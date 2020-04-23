@@ -35,4 +35,4 @@
 - `ctrl + s`: 파일 저장
 - `tab`: 자동완성 or indent추가
 - `shift + tab`: 툴팁 또는 변수 상태 표시
-  - 'shift + tab + tab': 설명 크게 
+  - `shift + tab + tab`: 설명 크게 보기  
